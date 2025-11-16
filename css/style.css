@@ -26,7 +26,7 @@ header.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 60px;
+  padding: 10px 50px;
   background-color: var(--bege);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   position: sticky;
@@ -35,21 +35,21 @@ header.navbar {
 }
 
 .logo img {
-  height: 130px; /* aumenta o tamanho — pode ajustar pra 100px, 120px etc */
+  height: 100px; /* menor e proporcional */
   width: auto;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 28px;
+  gap: 25px;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--texto);
   font-weight: 600;
-  font-size: 25px;
+  font-size: 22px;
   transition: color 0.3s;
 }
 
@@ -75,16 +75,12 @@ header.navbar {
   transform: scale(1.05);
 }
 
-.divisoria-flutuante {
-  position: absolute;
-  bottom: 80px;       /* ajusta a distância que vai “sobrepor” a hero */
-  left: 0;
-  width: 105%;         /* ocupa toda a largura da tela */
-  height: auto;
-  z-index: 5;          /* acima da hero, mas abaixo do carrossel se precisar */
-  pointer-events: none; /* não atrapalha cliques */
+/* garante contexto e empilhamento previsível */
+.hero-wrapper {
+  position: relative;
+  z-index: 5; /* hero + divisoria ficam acima da seção seguinte */
+  overflow: visible;
 }
-
 
 /* === HERO === */
 .hero {
@@ -94,8 +90,8 @@ header.navbar {
   justify-content: space-between;
   padding: 80px 10%;
   background: linear-gradient(to bottom, var(--creme-claro), var(--bege));
-  min-height: 70vh;
-  margin-bottom: -42px;
+  min-height: 75vh;
+  z-index: 1;
 }
 
 .hero-content h1 {
@@ -109,43 +105,78 @@ header.navbar {
   color: var(--texto);
 }
 
+/* imagem dos gatinhos */
 .hero-cat {
   position: absolute;
-  right: 0;               /* encosta na parede direita */
-  bottom: 0;              /* opcional: encosta embaixo também */
-  height: 90%;            /* ajusta o tamanho, pode mudar se quiser menor */
-  object-fit: contain;
-  pointer-events: none;   /* evita interferir em cliques */
-  margin-bottom: 15px;
+  right: 0;
+  bottom: 15px;
+  width: 165px; /* ajustado para notebooks */
+  height: auto;
+  pointer-events: none;
+  z-index: 2;
 }
-
+.divisoria-flutuante {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -22px; /* pode ajustar conforme precisar */
+  width: 110%;
+  max-width: 1400px;
+  height: auto;
+  max-height: 60px;
+  object-fit: contain;
+  object-position: bottom;
+  z-index: 10; /* AQUI está o truque — garante que a divisória fica acima da section */
+  pointer-events: none;
+  display: block;
+}
 /* === CARDÁPIO === */
 .menu-section {
-  padding: 1px 5% 25px; /* aumentamos o padding-top */
-  background-image: url('/imagens/patinhabanner.png');
-  background-size: cover;
-  background-position: center;
-  margin-top: 52px;
-  text-align: center;
   position: relative;
   z-index: 1;
+  background: none; /* sem fundo aqui */
+  text-align: center;
+  padding: 80px 6% 60px;
+  margin-top: 0;
+  overflow: visible;
 }
 
+/* camada com o padrão de patinhas — começa logo abaixo da divisória */
+.menu-section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #E2CEB1;
+  background-image: url('/imagens/patinhabanner.png');
+  background-repeat: no-repeat;
+  background-size: 150% auto;         /* mantém o tamanho atual */
+  background-position: center 10px;  /* ← sobe a imagem */
+  z-index: 1;
+  pointer-events: none;
+}
+
+.menu-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* título */
 .menu-section h2 {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   color: #7B4230;
-  text-align: right;          /* continua alinhado à direita */
-  margin-top: 60px;           /* aumenta a distância do topo da seção */
-  margin-bottom: 25px;
+  text-align: right;
+  margin-top: -30px;
+  margin-bottom: 10px;
   margin-right: 10px;
-
-  /* Caixa ao redor */
-  background-color: rgba(255, 255, 255, 0.8); /* fundo semi-transparente */
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 12px 20px;
   border-radius: 12px;
-  display: inline-block;      /* para o fundo ficar só atrás do texto */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* sombra leve */
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .carousel-wrapper {
@@ -153,40 +184,36 @@ header.navbar {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible;
+  padding: 0 35px;
 }
 
-/* 2) Carrossel controla o scroll horizontal — só ocultamos a barra, não o overflow vertical */
 .menu-carousel {
   display: flex;
   gap: 24px;
-  overflow-x: auto;         /* permite rolagem horizontal */
-  overflow-y: visible;      /* permite que o conteúdo ultrapasse verticalmente */
+  overflow-x: auto;
+  overflow-y: visible;
   scroll-behavior: smooth;
-  padding: 28px 20px;       /* espaço extra para o efeito de escala não ficar colado às bordas */
+  padding: 28px 20px;
   scrollbar-width: none;
 }
-
-/* esconder a barra no webkit (opcional) */
 .menu-carousel::-webkit-scrollbar { display: none; }
 
-/* 3) Card: cresce por cima sem empurrar e sem ser cortado */
 .menu-item {
   background-color: #FDFCF7;
   border-radius: 16px;
   padding: 15px;
-  margin: 0 1px;
   flex: 0 0 auto;
-  width: 280px;
-  height: 420px;
+  width: 210px;
+  height: 400px;
   text-align: center;
   box-shadow: 0 3px 6px rgba(0,0,0,0.08);
   transition: transform 0.28s cubic-bezier(.2,.8,.2,1), box-shadow 0.28s;
   transform-origin: center;
   position: relative;
-  z-index: 0;                /* base */
+  z-index: 0;
 }
 
-/* 5) (opcional) se quiser que só a imagem aumente e o card mantenha tamanho */
 .menu-item img {
   width: 100%;
   height: 180px;
@@ -200,22 +227,11 @@ header.navbar {
   transform: scale(1.08);
 }
 
-.menu-section h2 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: #7B4230;
-  text-align: left; /* muda para o canto direito */
-  margin-bottom: 25px;
-  margin-right: 30px; /* um espacinho da borda */
-} 
-
-/* 4) Ao hover, elevamos o z-index para sobrepor os irmãos e aumentar */
 .menu-item:hover {
   transform: scale(1.08);
   box-shadow: 0 10px 30px rgba(0,0,0,0.18);
   z-index: 20;
 }
-
 
 .menu-item h3 {
   margin: 10px 0 6px;
@@ -235,14 +251,6 @@ header.navbar {
 }
 
 /* === BOTÕES DO CARROSSEL === */
-
-/* Garante que o wrapper tenha espaço e não corte as setas */
-.carousel-wrapper {
-  position: relative;
-  overflow: visible; /* importante pra setas aparecerem fora */
-  padding: 0 35px;   /* espaço lateral pro conteúdo não colar nas setas */
-}
-
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -256,7 +264,7 @@ header.navbar {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  z-index: 100; /* garante que fique acima dos cards */
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,19 +272,13 @@ header.navbar {
   transition: all 0.3s ease;
 }
 
-/* Ao passar o mouse */
 .carousel-btn:hover {
   background-color: var(--marrom-medio);
   transform: translateY(-50%) scale(1.1);
 }
 
-/* Agora empurra as setas para FORA do carrossel */
-.carousel-btn.left {
-  left: -70px;   /* move pra fora da área visível do carrossel */
-}
-.carousel-btn.right {
-  right: -70px;  /* idem */
-}
+.carousel-btn.left { left: -70px; }
+.carousel-btn.right { right: -70px; }
 
 /* === RODAPÉ === */
 footer {
@@ -286,4 +288,46 @@ footer {
   color: var(--texto);
   font-size: 14px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1024px) {
+  header.navbar {
+    flex-direction: column;
+    padding: 15px 0;
+  }
+
+  .logo img {
+    height: 80px;
+  }
+
+  .nav-links a {
+    font-size: 20px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 8%;
+  }
+
+  .hero-cat {
+    position: static;
+    width: 180px;
+    margin-top: 20px;
+  }
+
+  .divisoria-flutuante {
+    bottom: 0;
+    max-height: 100px;
+  }
+
+  .menu-section {
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-cat { width: 140px; }
+  .menu-section { padding-top: 40px; }
 }
