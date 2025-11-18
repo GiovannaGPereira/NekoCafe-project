@@ -26,7 +26,7 @@ header.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 50px;
+  padding: 1px 50px;
   background-color: var(--bege);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   position: sticky;
@@ -35,7 +35,7 @@ header.navbar {
 }
 
 .logo img {
-  height: 100px; /* menor e proporcional */
+  height: 85px; /* menor e proporcional */
   width: auto;
 }
 
@@ -49,7 +49,7 @@ header.navbar {
   text-decoration: none;
   color: var(--texto);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 17px;
   transition: color 0.3s;
 }
 
@@ -64,7 +64,7 @@ header.navbar {
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -196,6 +196,8 @@ header.navbar {
   scroll-behavior: smooth;
   padding: 28px 20px;
   scrollbar-width: none;
+  background-color: #C4A17E; /* A cor #C4A17E que você pediu */
+  border-radius: 16px;
 }
 .menu-carousel::-webkit-scrollbar { display: none; }
 
@@ -277,57 +279,227 @@ header.navbar {
   transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-btn.left { left: -70px; }
-.carousel-btn.right { right: -70px; }
+.carousel-btn.left { left: -1px; }
+.carousel-btn.right { right: -1px; }
 
-/* === RODAPÉ === */
-footer {
+/* === QUEM SOMOS === */
+.quem-somos {
+  background-color: #E2CEB1;
+  padding: 80px 5%;
   text-align: center;
-  background-color: var(--bege);
-  padding: 20px;
+}
+
+.quem-somos h2 {
+  font-size: 2.3rem;
+  color: #7B4230;
+  margin-bottom: 20px;
+}
+
+.quem-somos p {
+  font-size: 1.2rem;
+  color: #5a3225;
+  margin-bottom: 40px;
+}
+
+/* SLIDER */
+.slider {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  position: relative;
+  /* Isso garante a proporção 16:9 das suas fotos */
+  aspect-ratio: 16 / 9; 
+}
+
+/* O container dos slides */
+.slides {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+/* CADA SLIDE INDIVIDUAL */
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  /* Mágica da imagem de fundo */
+  background-size: cover;
+  background-position: center;
+
+  /* Todos começam invisíveis */
+  opacity: 0;
+  
+  /* Define a animação (35s no total = 5s por imagem) */
+  animation: kenBurnsFade 35s infinite;
+}
+
+/* A ANIMAÇÃO MÁGICA (ZOOM + FADE) */
+@keyframes kenBurnsFade {
+  0% {
+    opacity: 0;
+    transform: scale(1.0); /* Começa com zoom 1 */
+  }
+  
+  /* 1. Fade-in (1% da animação) */
+  1% {
+    opacity: 1; 
+  }
+
+  /* 2. Pausa com Zoom (Dura 13% da animação) */
+  /* 5s de 35s = ~14.2%. Usamos 1% + 13% = 14% */
+  14% {
+    opacity: 1;
+    transform: scale(1.1); /* Termina com zoom 1.1 */
+  }
+
+  /* 3. Fade-out (1% da animação) */
+  15% {
+    opacity: 0;
+  }
+
+  /* 4. Restante do tempo (15% a 100%) */
+  100% {
+    opacity: 0;
+    transform: scale(1.0); /* Reseta para o loop */
+  }
+}
+
+/* O TRUQUE: Atrasar a animação de cada slide */
+/* 35s total / 7 imagens = 5s por slide */
+
+.slide:nth-child(1) { animation-delay: 0s; }  /* Imagem 1 (começa 0s) */
+.slide:nth-child(2) { animation-delay: 5s; }  /* Imagem 2 (começa 5s) */
+.slide:nth-child(3) { animation-delay: 10s; } /* Imagem 3 (começa 10s) */
+.slide:nth-child(4) { animation-delay: 15s; } /* Imagem 4 (começa 15s) */
+.slide:nth-child(5) { animation-delay: 20s; } /* Imagem 5 (começa 20s) */
+.slide:nth-child(6) { animation-delay: 25s; } /* Imagem 6 (começa 25s) */
+.slide:nth-child(7) { animation-delay: 30s; } /* Imagem 7 (começa 30s) */
+
+/* === SEÇÃO ADOÇÃO DE GATOS === */
+
+.adocao-section {
+  padding: 80px 5%;
+  text-align: center;
+  background-color: var(--creme-claro); /* Usa sua cor */
+  border-top: 2px solid rgba(123, 66, 48, 0.1); /* Borda sutil */
+}
+
+.adocao-section h2 {
+  font-size: 2.3rem;
   color: var(--texto);
-  font-size: 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
 }
 
-/* ===== RESPONSIVIDADE ===== */
-@media (max-width: 1024px) {
-  header.navbar {
-    flex-direction: column;
-    padding: 15px 0;
-  }
-
-  .logo img {
-    height: 80px;
-  }
-
-  .nav-links a {
-    font-size: 20px;
-  }
-
-  .hero {
-    flex-direction: column;
-    text-align: center;
-    padding: 60px 8%;
-  }
-
-  .hero-cat {
-    position: static;
-    width: 180px;
-    margin-top: 20px;
-  }
-
-  .divisoria-flutuante {
-    bottom: 0;
-    max-height: 100px;
-  }
-
-  .menu-section {
-    padding-top: 60px;
-  }
+.adocao-section p {
+  font-size: 1.2rem;
+  color: #5a3225;
+  margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
-  .hero-cat { width: 140px; }
-  .menu-section { padding-top: 40px; }
+/* O container que segura o slider E os botões */
+.gato-slider-container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative; /* Essencial para posicionar os botões */
+}
+
+/* O slider em si (invisível, só agrupa os slides) */
+.gato-slider {
+  width: 100%;
+  height: 400px; /* Defina uma altura fixa */
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: var(--branco); /* Fundo branco para os slides */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* CADA SLIDE (gatinho) */
+.gato-slide {
+  width: 100%;
+  height: 100%;
+  display: none; /* COMEÇAM ESCONDIDOS */
+  align-items: center;
+  position: absolute; /* Todos ficam empilhados */
+  top: 0;
+  left: 0;
+}
+
+/* O SLIDE ATIVO (O que está visível) */
+.gato-slide.active {
+  display: flex; /* <-- É ISSO QUE FAZ APARECER */
+  animation: fadeIn 0.6s ease; /* Animação de fade */
+}
+
+/* Conteúdo da esquerda (Texto) */
+.gato-info {
+  flex: 1; /* Ocupa 50% */
+  padding: 40px;
+  text-align: left;
+}
+.gato-info h3 {
+  font-size: 2rem;
+  color: var(--marrom-medio);
+  margin-bottom: 15px;
+}
+.gato-info p {
+  font-size: 1.1rem;
+  color: #5a4636;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.gato-info span {
+  font-weight: 600;
+  color: var(--texto);
+}
+
+/* Conteúdo da direita (Foto) */
+.gato-foto {
+  flex: 1; /* Ocupa 50% */
+  height: 100%;
+}
+.gato-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que a foto preencha o espaço sem distorcer */
+}
+
+/* BOTÕES DO SLIDER (Igual ao do cardápio) */
+.gato-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--marrom-claro);
+  color: var(--branco);
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+.gato-btn:hover {
+  background-color: var(--marrom-medio);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Posição dos botões */
+.gato-btn.left { left: -25px; } /* Fora da caixa, à esquerda */
+.gato-btn.right { right: -25px; } /* Fora da caixa, à direita */
+
+
+/* Animação de Fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
